@@ -19,6 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Photos> photo = [];
   List<String> imageUrls = [];
   int activeIndex = 0;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -41,6 +42,7 @@ class _MainScreenState extends State<MainScreen> {
       for (int i = 0; i <= 7; i++) {
         imageUrls.add(photo[i].src.original);
       }
+      isLoading = true;
     });
   }
 
@@ -60,33 +62,37 @@ class _MainScreenState extends State<MainScreen> {
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
-              CarouselSlider.builder(
-                  itemCount: imageUrls.length,
-                  itemBuilder: (context, index, realIndex) {
-                    final res = imageUrls[index];
-                    return Container(
-                      height: MediaQuery.of(context).size.height / 1.5,
-                      width: MediaQuery.of(context).size.width,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: CachedNetworkImage(
-                          imageUrl: res,
-                          fit: BoxFit.fill,
+              Visibility(
+                visible: isLoading,
+                replacement: Center(child: CircularProgressIndicator(),),
+                child: CarouselSlider.builder(
+                    itemCount: imageUrls.length,
+                    itemBuilder: (context, index, realIndex) {
+                      final res = imageUrls[index];
+                      return Container(
+                        height: MediaQuery.of(context).size.height / 1.5,
+                        width: MediaQuery.of(context).size.width,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: CachedNetworkImage(
+                            imageUrl: res,
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  options: CarouselOptions(
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          activeIndex = index;
-                        });
-                      },
-                      autoPlay: true,
-                      height: MediaQuery.of(context).size.height / 1.7,
-                      //viewportFraction: 1,
-                      enlargeCenterPage: true,
-                      enlargeStrategy: CenterPageEnlargeStrategy.height)),
+                      );
+                    },
+                    options: CarouselOptions(
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            activeIndex = index;
+                          });
+                        },
+                        autoPlay: true,
+                        height: MediaQuery.of(context).size.height / 1.7,
+                        //viewportFraction: 1,
+                        enlargeCenterPage: true,
+                        enlargeStrategy: CenterPageEnlargeStrategy.height)),
+              ),
               SizedBox(
                 height: 10,
               ),

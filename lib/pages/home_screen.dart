@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:gallery_app/pages/category_screen.dart';
 import 'package:gallery_app/pages/main_screen.dart';
 import 'package:gallery_app/pages/search_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../theme/theme_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,11 +23,38 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Container(
+            child: Provider.of<ThemeProvider>(context, listen: false).isDarkMode
+                ? Container(
+              child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      Provider.of<ThemeProvider>(context,
+                          listen: false)
+                          .toggleTheme();
+                    });
+                  },
+                  icon: Icon(Icons.dark_mode)),
+            )
+                : Container(
+              child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      Provider.of<ThemeProvider>(context,
+                          listen: false)
+                          .toggleTheme();
+                    });
+                  },
+                  icon: Icon(Icons.sunny)),
+            ),
+          )
+        ],
         title: Text(
           "W A L L P A P E R S",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.purple.shade200,
+        backgroundColor: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.deepPurple.shade200,
         centerTitle: true,
       ),
       bottomNavigationBar: CurvedNavigationBar(
@@ -33,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
             my_index = value;
           });
         },
-        color: Colors.purple.shade200,
+        color: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.deepPurple.shade200,
         backgroundColor: Colors.white,
         height: 60,
         items: [
