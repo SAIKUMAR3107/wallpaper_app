@@ -65,6 +65,12 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: TextField(
                         controller: searchResult,
                         onChanged: (text) {
+                          setState(() {
+                            if(text==""){
+                              photo = [];
+                              noImage = false;
+                            }
+                          });
 
                         },
                         decoration: InputDecoration(
