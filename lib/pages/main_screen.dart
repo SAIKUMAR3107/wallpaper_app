@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_app/pages/details_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -132,44 +133,49 @@ class _MainScreenState extends State<MainScreen> {
                       crossAxisSpacing: 10,
                       childAspectRatio: 0.6),
                   itemBuilder: (context, index) {
-                    return Stack(children: [
-                      Container(
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: CachedNetworkImage(
-                              imageUrl: photo[index].src.small,
-                              fit: BoxFit.fill,
-                              height: 500,
-                              width: MediaQuery.of(context).size.width,
-                            )),
-                      ),
-                      Positioned(
-                          right: 10,
-                          bottom: 5,
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.white.withOpacity(0.5))),
-                              onPressed: () {
-                                download(photo[index].src.original);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(
-                                            "Image downloaded successfully")));
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Download",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  Icon(
-                                    Icons.download,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              )))
-                    ]);
+                    return InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsScreen(photos: photo[index]),));
+                      },
+                      child: Stack(children: [
+                        Container(
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
+                                imageUrl: photo[index].src.small,
+                                fit: BoxFit.fill,
+                                height: 500,
+                                width: MediaQuery.of(context).size.width,
+                              )),
+                        ),
+                        Positioned(
+                            right: 10,
+                            bottom: 5,
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.white.withOpacity(0.5))),
+                                onPressed: () {
+                                  download(photo[index].src.original);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Image downloaded successfully")));
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Download",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    Icon(
+                                      Icons.download,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                )))
+                      ]),
+                    );
                   },
                 ),
               ),

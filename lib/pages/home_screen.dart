@@ -18,6 +18,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var my_index = 0;
   List<Widget> pages = [MainScreen(), SearchScreen(), CategoryScreen()];
+  List<Widget> titles = [
+    Text("W A L L P A P E R S", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+    Text("S E A R C H", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+    Text("C A T E G O R Y", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           )
         ],
-        title: Text(
-          "W A L L P A P E R S",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+        title: titles[my_index],
         backgroundColor: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.deepPurple.shade200,
         centerTitle: true,
       ),
