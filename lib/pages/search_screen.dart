@@ -81,7 +81,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               listen: false)
                                           .isDarkMode
                                       ? Colors.black87
-                                      : Colors.deepPurple.shade200)),
+                                      : Colors.orange)),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide(
@@ -89,7 +89,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               listen: false)
                                           .isDarkMode
                                       ? Colors.black87
-                                      : Colors.deepPurple.shade200)),
+                                      : Colors.orange)),
                           labelText: "Search",
                           floatingLabelBehavior: FloatingLabelBehavior.auto,
                           floatingLabelStyle: TextStyle(
@@ -97,7 +97,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           listen: false)
                                       .isDarkMode
                                   ? Colors.black87
-                                  : Colors.deepPurple.shade200,
+                                  : Colors.orange,
                               fontFamily: "sans-serif-condensed-light",
                               fontWeight: FontWeight.bold),
                           hintStyle: TextStyle(
@@ -105,7 +105,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           listen: false)
                                       .isDarkMode
                                   ? Colors.black87
-                                  : Colors.deepPurple.shade200,
+                                  : Colors.orange,
                               fontSize: 18,
                               fontFamily: "sans-serif-condensed-light",
                               fontWeight: FontWeight.bold),
@@ -114,12 +114,12 @@ class _SearchScreenState extends State<SearchScreen> {
                               Provider.of<ThemeProvider>(context, listen: false)
                                       .isDarkMode
                                   ? Colors.black87
-                                  : Colors.deepPurple.shade200,
+                                  : Colors.orange,
                           suffixIconColor:
                               Provider.of<ThemeProvider>(context, listen: false)
                                       .isDarkMode
                                   ? Colors.black87
-                                  : Colors.deepPurple.shade200,
+                                  : Colors.orange,
                         ),
                       ),
                     ),
@@ -137,7 +137,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           listen: false)
                                       .isDarkMode
                                   ? Colors.black87
-                                  : Colors.deepPurple.shade200),
+                                  : Colors.orange),
                           onPressed: () {
                             setState(() {
                               var text = searchResult.text;

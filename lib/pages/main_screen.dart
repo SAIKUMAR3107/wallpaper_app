@@ -142,7 +142,7 @@ class _MainScreenState extends State<MainScreen> {
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: CachedNetworkImage(
-                                imageUrl: photo[index].src.small,
+                                imageUrl: photo[index].src.medium,
                                 fit: BoxFit.fill,
                                 height: 500,
                                 width: MediaQuery.of(context).size.width,

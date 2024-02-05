@@ -60,7 +60,7 @@ class _EachCategoryScreenState extends State<EachCategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.categoty.toUpperCase()),
-        backgroundColor: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.deepPurple.shade200,
+        backgroundColor: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.orange,
         centerTitle: true,),
       body :Container(
         height: double.infinity,
@@ -83,7 +83,7 @@ class _EachCategoryScreenState extends State<EachCategoryScreen> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: CachedNetworkImage(
-                        imageUrl: photo[index].src.small,
+                        imageUrl: photo[index].src.medium,
                         fit: BoxFit.fill,
                         height: 500,
                         width: MediaQuery.of(context).size.width,

@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
         title: titles[my_index],
-        backgroundColor: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.deepPurple.shade200,
+        backgroundColor: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.orange,
         centerTitle: true,
       ),
       bottomNavigationBar: CurvedNavigationBar(
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             my_index = value;
           });
         },
-        color: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.deepPurple.shade200,
+        color: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.orange,
         backgroundColor: Colors.white,
         height: 60,
         items: [
