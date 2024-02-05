@@ -100,6 +100,12 @@ class _MainScreenState extends State<MainScreen> {
               AnimatedSmoothIndicator(
                 activeIndex: activeIndex,
                 count: imageUrls.length,
+                onDotClicked: (index){
+                  setState(() {
+                    activeIndex = index;
+                  });
+
+                },
                 effect: JumpingDotEffect(
                     jumpScale: 1.6,
                     dotWidth: 15,

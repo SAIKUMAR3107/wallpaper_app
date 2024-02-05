@@ -58,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: titles[my_index],
         backgroundColor: Provider.of<ThemeProvider>(context, listen: false).isDarkMode ? Colors.black87 : Colors.orange,
         centerTitle: true,
+        leading: Container(),
       ),
       bottomNavigationBar: CurvedNavigationBar(
         onTap: (value) {

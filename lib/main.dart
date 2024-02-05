@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gallery_app/pages/home_screen.dart';
+import 'package:gallery_app/pages/spalsh_screen.dart';
 import 'package:gallery_app/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: HomeScreen()
+      home: SplashScreen()
     );
   }
 }
