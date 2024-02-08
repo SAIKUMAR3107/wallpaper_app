@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gallery_app/pages/home_screen.dart';
+import 'package:gallery_app/pages/login_screen.dart';
 
 class OnBoardingScreen3 extends StatefulWidget {
   const OnBoardingScreen3({super.key});
@@ -38,7 +38,7 @@ class _OnBoardingScreen3State extends State<OnBoardingScreen3> {
                           height: 50,
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
                             },
                             child: Text("Get Started",style: TextStyle(fontSize: 18),),
                             style: ElevatedButton.styleFrom(
