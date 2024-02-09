@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gallery_app/services/auth_service.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../theme/theme_provider.dart';
 import 'home_screen.dart';
 import 'login_screen.dart';
 
@@ -47,13 +50,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return password;
   }
 
-  void register() async{
+  void register() async {
     var auth = AuthServices();
     if (email.text.isNotEmpty &&
         password.text.isNotEmpty &&
         cnfPassword.text.isNotEmpty) {
       if (password.text == cnfPassword.text) {
         try {
+          var shared = await SharedPreferences.getInstance();
+          shared.setBool("isLogin", true);
           auth.registerWithEmailAndPassword(email.text, password.text);
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => HomeScreen()));
@@ -61,15 +66,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: Text(e.toString()),
-              ));
+                    title: Text(e.toString()),
+                  ));
         }
       } else {
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text("Password & Confirm Password should be same"),
-            ));
+                  title: Text("Password & Confirm Password should be same"),
+                ));
       }
     } else {
       setState(() {
@@ -79,8 +84,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text("Field should not be empty"),
-          ));
+                title: Text("Field should not be empty"),
+              ));
     }
   }
 
@@ -89,6 +94,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    "assets/laptop.jpg",
+                  ),
+                  fit: BoxFit.fill)),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -96,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               Text(
                 "Register",
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 30, color: Colors.white),
               ),
               SizedBox(
                 height: 30,
@@ -104,10 +115,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: TextField(
+                  style: TextStyle(color: Colors.white),
                   controller: validateEmail(email),
                   decoration: InputDecoration(
                       labelText: "Email",
-                      labelStyle: TextStyle(color: Colors.grey),
+                      labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(color: Colors.orange)),
@@ -119,12 +131,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               hint
                   ? Container()
                   : Container(
-                  padding: EdgeInsets.only(left: 20),
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    hintText,
-                    style: TextStyle(color: Colors.red),
-                  )),
+                      padding: EdgeInsets.only(left: 20),
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        hintText,
+                        style: TextStyle(color: Colors.red),
+                      )),
               SizedBox(
                 height: 20,
               ),
@@ -133,6 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: TextField(
                   controller: validatePassword(password),
                   obscureText: passwordVisibility,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                       labelText: "Password",
                       suffixIcon: IconButton(
@@ -146,7 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           });
                         },
                       ),
-                      labelStyle: TextStyle(color: Colors.grey),
+                      labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(color: Colors.orange)),
@@ -158,12 +171,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               hint
                   ? Container()
                   : Container(
-                  padding: EdgeInsets.only(left: 20),
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    hintText,
-                    style: TextStyle(color: Colors.red),
-                  )),
+                      padding: EdgeInsets.only(left: 20),
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        hintText,
+                        style: TextStyle(color: Colors.red),
+                      )),
               SizedBox(
                 height: 20,
               ),
@@ -172,6 +185,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: TextField(
                   controller: validatePassword(cnfPassword),
                   obscureText: passwordVisibility,
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                       labelText: "Confirm Password",
                       suffixIcon: IconButton(
@@ -185,7 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           });
                         },
                       ),
-                      labelStyle: TextStyle(color: Colors.grey),
+                      labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(color: Colors.orange)),
@@ -197,25 +211,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
               hint
                   ? Container()
                   : Container(
-                  padding: EdgeInsets.only(left: 20),
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    hintText,
-                    style: TextStyle(color: Colors.red),
-                  )),
+                      padding: EdgeInsets.only(left: 20),
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        hintText,
+                        style: TextStyle(color: Colors.red),
+                      )),
               SizedBox(
                 height: 15,
               ),
               SizedBox(
-                width: double.infinity,
+                width: 250,
+                height: 50,
                 child: Container(
                   padding: EdgeInsets.only(left: 20, right: 20),
                   child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.orange),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ))),
                       onPressed: () {
                         hintText = "Field should not be Empty";
                         register();
                       },
-                      child: Text("Register")),
+                      child: Text(
+                        "R E G I S T E R",
+                        style: TextStyle(color: Colors.white, fontSize: 17),
+                      )),
                 ),
               ),
               SizedBox(
@@ -226,23 +252,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Text(
                     "Already have an account?  ",
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color: Colors.white, fontSize: 15),
                   ),
                   InkWell(
                       onTap: () {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => LoginScreen()));
                       },
-                      child: Text("Login"))
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ))
                 ],
               )
             ],
           ),
         ),
-      ) ,
+      ),
     );
   }
-
-
 }
