@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../model/photos.dart';
+import 'download_dialog_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -47,13 +48,6 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  void download(String original) async {
-    var time = DateTime.now().microsecondsSinceEpoch;
-    var path = "/storage/emulated/0/Download/image-$time.jpg";
-    var file = File(path);
-    var res = await http.Client().get(Uri.parse(original));
-    file.writeAsBytes(res.bodyBytes);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,11 +156,9 @@ class _MainScreenState extends State<MainScreen> {
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.white.withOpacity(0.5))),
                                 onPressed: () {
-                                  download(photo[index].src.original);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              "Image downloaded successfully")));
+                                  setState(() {
+                                    showDialog(context: context, builder: (context) => DownloadDialogScreen(original: photo[index].src.original,),);
+                                  });
                                 },
                                 child: Row(
                                   children: [

@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../model/photos.dart';
 import '../theme/theme_provider.dart';
 import 'details_screen.dart';
+import 'download_dialog_screen.dart';
 
 class EachCategoryScreen extends StatefulWidget {
   String categoty;
@@ -40,14 +41,6 @@ class _EachCategoryScreenState extends State<EachCategoryScreen> {
     } else {
       print("Saikumar");
     }
-  }
-
-  void download(String original) async {
-    var time = DateTime.now().microsecondsSinceEpoch;
-    var path = "/storage/emulated/0/Download/image-$time.jpg";
-    var file = File(path);
-    var res = await http.Client().get(Uri.parse(original));
-    file.writeAsBytes(res.bodyBytes);
   }
 
   @override
@@ -97,11 +90,9 @@ class _EachCategoryScreenState extends State<EachCategoryScreen> {
                             backgroundColor: MaterialStateProperty.all(
                                 Colors.white.withOpacity(0.5))),
                         onPressed: () {
-                          download(photo[index].src.original);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text(
-                                      "Image downloaded successfully")));
+                          setState(() {
+                            showDialog(context: context, builder: (context) => DownloadDialogScreen(original: photo[index].src.original,),);
+                          });
                         },
                         child: Row(
                           children: [

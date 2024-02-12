@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../model/photos.dart';
 import '../services/favorite_service.dart';
 import '../theme/theme_provider.dart';
+import 'download_dialog_screen.dart';
 
 class DetailsScreen extends StatefulWidget {
   Photos photos;
@@ -20,16 +21,8 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  bool isLoading = false;
   bool liked = false;
 
-  void download(String original) async {
-    var time = DateTime.now().microsecondsSinceEpoch;
-    var path = "/storage/emulated/0/Download/image-$time.jpg";
-    var file = File(path);
-    var res = await http.Client().get(Uri.parse(original));
-    file.writeAsBytes(res.bodyBytes);
-  }
 
   void getAllImages() async {
     await FavoriteService().getAllFavoriteImages().then((value) {
@@ -48,11 +41,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5), () {
-      setState(() {
-        isLoading = true;
-      });
-    });
     getAllImages();
     //print(widget.photos.src.original);
   }
@@ -75,8 +63,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
         child: Container(
             height: double.infinity,
             width: double.infinity,
-            child: isLoading
-                ? Stack(
+            color: Colors.black,
+            child: Stack(
                     children: [
                       Container(
                         height: double.infinity,
@@ -86,17 +74,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      /*Container(
-                margin: EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    IconButton(onPressed: (){
-                      Navigator.pop(context);
-                    }, icon: Icon(Icons.arrow_back_ios,size: 30,color: Colors.white,)),
-                    Container(child: Text("Picture details", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 30),))
-                  ],
-                ),
-              ),*/
+
                       Positioned(
                           bottom: 10,
                           left: 0,
@@ -141,11 +119,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    download(widget.photos.src.original);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                "Downloading has started")));
+                                    setState(() {
+                                      showDialog(context: context, builder: (context) => DownloadDialogScreen(original: widget.photos.src.original,),);
+                                    });
                                   },
                                   child: Container(
                                     child: Column(
@@ -206,7 +182,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                           height: 5,
                                         ),
                                         Text(
-                                          "Like",
+                                          "Favorites",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold),
@@ -259,18 +235,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           )),
                     ],
                   )
-                : Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text("Loading")
-                      ],
-                    ),
-                  )),
+                ),
       ),
     );
   }

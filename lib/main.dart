@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gallery_app/pages/home_screen.dart';
 import 'package:gallery_app/pages/spalsh_screen.dart';
+import 'package:gallery_app/services/noification_service.dart';
 import 'package:gallery_app/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   await Firebase.initializeApp(
     options: FirebaseOptions(
         apiKey: "AIzaSyD8eHak8XXJ3cLWs1iAZEC-RlG0vnk3nng", //current key in google-services.json file
