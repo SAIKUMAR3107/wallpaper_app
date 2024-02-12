@@ -13,12 +13,18 @@ class OnBoardingScreens extends StatefulWidget {
 
 class _OnBoardingScreensState extends State<OnBoardingScreens> {
   var count = PageController();
+  var index1 = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
           children:  [
             PageView(controller: count,
+              onPageChanged: (index){
+              setState(() {
+                index1 = index;
+              });
+              },
               children: [
                 OnBoardingScreen1(),
                 OnBoardingScreen2(),
@@ -33,7 +39,8 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                 dotColor: Colors.grey,
                 dotWidth: 15,
               ),
-                onDotClicked: (index) => count.animateToPage(index, duration: Duration(milliseconds: 300), curve:Curves.easeIn),
+                onDotClicked: (index) {
+                count.animateToPage(index, duration: Duration(milliseconds: 300), curve:Curves.easeIn);},
               ),
             ),
             Container(
@@ -41,7 +48,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                   child:  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Swipe right to next ",style: TextStyle(fontSize: 18,color: Colors.white),),
+                      index1 != 2 ? Text("Swipe right to next ",style: TextStyle(fontSize: 18,color: Colors.white),) : Container(),
                       Icon(Icons.arrow_forward_outlined,size: 18,color: Colors.white,)
                     ],
             ),)
