@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Visibility(
                 visible: isLoading,
-                replacement: Center(child: CircularProgressIndicator(),),
+                replacement: Center(child: CircularProgressIndicator(color: Colors.orange,),),
                 child: CarouselSlider.builder(
                     itemCount: imageUrls.length,
                     itemBuilder: (context, index, realIndex) {

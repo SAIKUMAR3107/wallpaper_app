@@ -20,6 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   var searchResult = TextEditingController();
   List<Photos> photo = [];
   bool noImage = false;
+  bool isLoading = false;
 
   void searchResponse(String text) async {
     var client = http.Client();
@@ -34,6 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
       setState(() {
         var data = jsonDecode(response.body);
         data["photos"].map((e) => photo.add(Photos.fromJson(e))).toList();
+        isLoading = true;
       });
     } else {
       print("Saikumar");
@@ -146,6 +148,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 noImage = false;
                               } else {
                                 searchResponse(text);
+                                isLoading = false;
                                 noImage = true;
                               }
                             });
@@ -164,69 +167,73 @@ class _SearchScreenState extends State<SearchScreen> {
                       ? Center(
                           child: Text("Search For Image"),
                         )
-                      : GridView.builder(
-                          itemCount: photo.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
-                                  childAspectRatio: 0.6),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailsScreen(photos: photo[index]),
-                                    ));
-                              },
-                              child: Stack(children: [
-                                Container(
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: CachedNetworkImage(
-                                        imageUrl: photo[index].src.small,
-                                        fit: BoxFit.fill,
-                                        height: 500,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                      )),
-                                ),
-                                Positioned(
-                                    right: 10,
-                                    bottom: 5,
-                                    child: ElevatedButton(
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(Colors
-                                                    .white
-                                                    .withOpacity(0.5))),
-                                        onPressed: () {
-                                          download(photo[index].src.original);
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  content: Text(
-                                                      "Image downloaded successfully")));
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "Download",
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                            Icon(
-                                              Icons.download,
-                                              color: Colors.white,
-                                            )
-                                          ],
-                                        )))
-                              ]),
-                            );
-                          },
-                        ))
+                      : Visibility(
+                    visible: isLoading,
+                        replacement: Center(child: CircularProgressIndicator(color: Colors.orange,),),
+                        child: GridView.builder(
+                            itemCount: photo.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 10,
+                                    childAspectRatio: 0.6),
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailsScreen(photos: photo[index]),
+                                      ));
+                                },
+                                child: Stack(children: [
+                                  Container(
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: CachedNetworkImage(
+                                          imageUrl: photo[index].src.small,
+                                          fit: BoxFit.fill,
+                                          height: 500,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                        )),
+                                  ),
+                                  Positioned(
+                                      right: 10,
+                                      bottom: 5,
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(Colors
+                                                      .white
+                                                      .withOpacity(0.5))),
+                                          onPressed: () {
+                                            download(photo[index].src.original);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "Image downloaded successfully")));
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Download",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              Icon(
+                                                Icons.download,
+                                                color: Colors.white,
+                                              )
+                                            ],
+                                          )))
+                                ]),
+                              );
+                            },
+                          ),
+                      ))
             ],
           )),
     );

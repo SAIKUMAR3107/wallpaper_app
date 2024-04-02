@@ -50,9 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return AdvancedDrawer(
       controller: advancedDrawerController,
       backdropColor:
-          Provider.of<ThemeProvider>(context, listen: false).isDarkMode
-              ? Colors.black87
-              : Colors.grey.shade100,
+      Provider
+          .of<ThemeProvider>(context, listen: false)
+          .isDarkMode
+          ? Colors.black87
+          : Colors.grey.shade100,
       animationCurve: Curves.easeOutQuart,
       openScale: 0.75,
       openRatio: 0.55,
@@ -67,9 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Icon(
               Icons.person,
               color:
-                  Provider.of<ThemeProvider>(context, listen: false).isDarkMode
-                      ? Colors.white
-                      : Colors.orange,
+              Provider
+                  .of<ThemeProvider>(context, listen: false)
+                  .isDarkMode
+                  ? Colors.white
+                  : Colors.orange,
               size: 100,
             ),
             SizedBox(
@@ -89,8 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               leading: Icon(
                 Icons.favorite,
-                color: Provider.of<ThemeProvider>(context, listen: false)
-                        .isDarkMode
+                color: Provider
+                    .of<ThemeProvider>(context, listen: false)
+                    .isDarkMode
                     ? Colors.white
                     : Colors.orange,
               ),
@@ -101,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () async {
                 FirebaseAuth.instance.signOut();
                 SharedPreferences shared =
-                    await SharedPreferences.getInstance();
+                await SharedPreferences.getInstance();
                 setState(() {
                   shared.setBool("isLogin", false);
                   Navigator.pushReplacement(
@@ -113,8 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               leading: Icon(
                 Icons.logout,
-                color: Provider.of<ThemeProvider>(context, listen: false)
-                        .isDarkMode
+                color: Provider
+                    .of<ThemeProvider>(context, listen: false)
+                    .isDarkMode
                     ? Colors.white
                     : Colors.orange,
               ),
@@ -130,35 +136,38 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           actions: [
             Container(
-              child: Provider.of<ThemeProvider>(context, listen: false)
-                      .isDarkMode
+              child: Provider
+                  .of<ThemeProvider>(context, listen: false)
+                  .isDarkMode
                   ? Container(
-                      child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              Provider.of<ThemeProvider>(context, listen: false)
-                                  .toggleTheme();
-                            });
-                          },
-                          icon: Icon(Icons.dark_mode)),
-                    )
+                child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .toggleTheme();
+                      });
+                    },
+                    icon: Icon(Icons.dark_mode)),
+              )
                   : Container(
-                      child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              Provider.of<ThemeProvider>(context, listen: false)
-                                  .toggleTheme();
-                            });
-                          },
-                          icon: Icon(Icons.sunny)),
-                    ),
+                child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .toggleTheme();
+                      });
+                    },
+                    icon: Icon(Icons.sunny)),
+              ),
             )
           ],
           title: titles[my_index],
           backgroundColor:
-              Provider.of<ThemeProvider>(context, listen: false).isDarkMode
-                  ? Colors.black87
-                  : Colors.orange,
+          Provider
+              .of<ThemeProvider>(context, listen: false)
+              .isDarkMode
+              ? Colors.black87
+              : Colors.orange,
           centerTitle: true,
           leading: IconButton(
               onPressed: () {
@@ -175,7 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
               my_index = value;
             });
           },
-          color: Provider.of<ThemeProvider>(context, listen: false).isDarkMode
+          color: Provider
+              .of<ThemeProvider>(context, listen: false)
+              .isDarkMode
               ? Colors.black87
               : Colors.orange,
           backgroundColor: Colors.white,
